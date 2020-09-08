@@ -18,11 +18,11 @@ profit = income - outcome
 if profit > 0:
     print('Your firm performed well')
     profitability = profit / income * 100
-    print('Your firm has profitability: {:.2f}'.format(profitability))
+    print(f'Your firm has profitability: {profitability:.2f}')
     while (employees_count := input('Enter employees count ')) and not employees_count.isnumeric():
         print('Wrong number, try again')
     employees_count = int(employees_count)
-    print('Profit per employee: {:.2f}'.format(profit / employees_count, 2))
+    print(f'Profit per employee: {profit / employees_count:.2f}')
 elif profit < 0:
     print('Your firm performed bad. Fire your director!')
 else:

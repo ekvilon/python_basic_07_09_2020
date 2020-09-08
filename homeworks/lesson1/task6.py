@@ -19,7 +19,7 @@ day = 2
 print('1-st day distance:', first_day_distance)
 
 while distance := distance + distance / 10:
-    print('{}-th day distance: {:.2f}'.format(day, distance))
+    print(f'{day}-th day distance: {distance:.2f}')
     if distance > destination:
         break
     day += 1

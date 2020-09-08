@@ -11,4 +11,4 @@ hours = seconds // 3600
 minutes = seconds % 3600 // 60
 seconds = seconds % 60
 
-print('Time in hh:mm:ss format is {:02}:{:02}:{:02}'.format(hours, minutes, seconds))
+print(f'Time in hh:mm:ss format is {hours:02}:{minutes:02}:{seconds:02}')
