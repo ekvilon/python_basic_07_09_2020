@@ -3,7 +3,7 @@
 Считаем 3 + 33 + 333 = 369.
 """
 
-while (number := input("Enter number ")) and not number.isnumeric():
+while (number := input('Enter number ')) and not number.isnumeric():
     print('Wrong number, try again')
 
 number = int(number)
