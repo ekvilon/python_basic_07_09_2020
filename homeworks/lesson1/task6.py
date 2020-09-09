@@ -16,10 +16,13 @@ destination = int(destination)
 distance = first_day_distance
 day = 2
 
-print('1-st day distance:', first_day_distance)
+print(f'\nResult:')
+print(f'\n1-th day distance: {first_day_distance}')
 
 while distance := distance + distance / 10:
     print(f'{day}-th day distance: {distance:.2f}')
     if distance > destination:
         break
     day += 1
+
+print(f'\nAnswer: runner reached the destination distance on {day}-th day - greater or equal to {destination} km')
