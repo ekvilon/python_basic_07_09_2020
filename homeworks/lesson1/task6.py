@@ -14,13 +14,14 @@ while (destination := input('Enter runner destination distance ')) and not desti
 first_day_distance = int(first_day_distance)
 destination = int(destination)
 distance = first_day_distance
-day = 1
+day = 2
 
-print('1-st day distance:', first_day_distance)
+print(f'\nResult:')
+print(f'\n1-th day distance: {first_day_distance}')
 
 while distance < destination:
     day += 1
     distance *= 1.1
     print(f'{day}-th day distance: {distance:.2f}')
 
-print(f'The runner runs for {distance:.2f} km on {day}-th day and reaches his goal: run more or equals to {destination} km')
+print(f'Answer: the runner had run for {distance:.2f} km on {day}-th day and reached his goal: run greater or equal to {destination} km')
