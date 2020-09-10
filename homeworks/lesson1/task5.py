@@ -26,4 +26,4 @@ if profit > 0:
 elif profit < 0:
     print('Your firm performed bad. Fire your director!')
 else:
-    print('Your firm is bankrupt')
+    print('Your firm is odd')
