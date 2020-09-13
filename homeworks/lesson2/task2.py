@@ -6,7 +6,7 @@
 
 a_list = []
 
-while (value := input('Enter a next value or hit Enter to finish ')) and value != '':
+while value := input('Enter a next value or hit Enter to finish '):
     a_list.append(value)
 
 for idx in range(1, len(a_list), 2):
