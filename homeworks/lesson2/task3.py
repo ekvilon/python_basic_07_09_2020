@@ -3,7 +3,8 @@
 (зима, весна, лето, осень). Напишите решения через list и через dict.
 """
 
-months = {(12, 1, 2): 'winter', (3, 4, 5): 'spring', (6, 7, 8): 'summer', (9, 10, 11): 'autumn'}
+seasons = ('winter', 'spring', 'summer', 'autumn')
+
 month = None
 
 while True:
@@ -16,6 +17,4 @@ while True:
     if month is None:
         print('Enter correct month number')
 
-for key, value in months.items():
-    if month in key:
-        print('You have entered month of', value)
+print(f'Month {month} is in {seasons[month // 3 % 4]}')
