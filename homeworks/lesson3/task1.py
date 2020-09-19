@@ -26,11 +26,15 @@ def divide_two_numbers(x, y):
         print('Dividing on zero is prohibited')
 
 
-if __name__ == '__main__':
+def main():
     x = read_value('Enter first number ')
     y = read_value('Enter second number ')
     result = divide_two_numbers(x, y)
 
     # result of division can't be 0 or None
     if result:
-        print('Result:', x / y)
+        print('Result:', result)
+
+
+if __name__ == '__main__':
+    main()

@@ -4,22 +4,24 @@
 """
 
 
-def my_func(*numbers: [int]):
+def sum_biggest_numbers_in_list(*args, count: int = 2):
+    numbers = sorted(args)
+
+    return sum(numbers[-count:])
+
+
+def my_func(x, y, z):
     """
     Gets 3 numbers and returns sum of two greatest
 
-    :param numbers:
+    :param x: int
+    :param y: int
+    :param z: int
     :return: int
     """
-    if len(numbers) != 3:
-        raise Exception('You should pass 3 numbers')
-    values = list(numbers)
-    while len(values) != 2:
-        min_number = min(values)
-        values.remove(min_number)
-    return sum(values)
+    return sum_biggest_numbers_in_list(x, y, z, count=2)
 
 
 if __name__ == '__main__':
-    print('Result:', my_func(10, 5, 7))
+    print('Result:', my_func(4, 10, 1))
 

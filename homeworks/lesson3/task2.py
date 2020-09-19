@@ -4,30 +4,35 @@
 данных о пользователе одной строкой.
 """
 
-from homeworks.lesson3.task1 import read_value
 
-user_meta = (
-    ('firstName', 'First name', 'Enter first name ', str),
-    ('lastName', 'Last name', 'Enter last name ', str),
-    ('dob', 'Birthday', 'Enter birthday ', str),
-    ('city', 'City', 'Enter city ', str),
-    ('email', 'Email', 'Enter email ', str),
-    ('phone', 'Phone', 'Enter phone ', str)
-)
+def create_user_data(first_name: str,
+                     last_name: str,
+                     dob: str,
+                     city: str,
+                     email: str,
+                     phone: str):
+    return first_name, last_name, dob, city, email, phone
 
 
-def read_dict(meta):
-    obj = {}
-    for info in meta:
-        field_name, field_title, prompt, constructor = info
-        obj[field_name] = field_title, read_value(prompt, constructor)
-    return obj
+def print_user_data(user):
+    first_name, last_name, dob, city, email, phone = user
+    print(
+        f'User profile - name: {first_name} {last_name}, date of birth: {dob}, ' +
+        f'city of living: {city}, email: {email}, phone: {phone}'
+    )
+
+
+def main():
+    user = create_user_data(
+        first_name='Joe',
+        last_name='Doe',
+        dob='01.01.1970',
+        city='London',
+        email='joe.doe@gmail.com',
+        phone='+44 1632 960492')
+    print_user_data(user)
 
 
 if __name__ == '__main__':
-    user = read_dict(user_meta)
-    print('\n\nEntered user profile:\n\n')
-    for field_name, data in user.items():
-        title, value = data
-        print(title, value)
+    main()
 
