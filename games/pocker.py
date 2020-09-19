@@ -1,15 +1,49 @@
 from random import shuffle
-import turtle
+from itertools import chain
+from tkinter import PhotoImage
+import turtle as Turtle
+from turtle import Shape
 
+card_joker_value = 0
 card_jack_value = 11
 card_queen_value = 12
 card_king_value = 13
 card_ace_value = 14
 
-suit_spades = '♠'
-suit_hearts = '♥'
-suit_clubs = '♣'
-suit_diamonds = '♦'
+suit_spades = 'spades'
+suit_hearts = 'hearts'
+suit_clubs = 'clubs'
+suit_diamonds = 'diamonds'
+
+
+card_images = dict(chain({n: str(n) for n in range(2, 11)}.items(), {
+    card_jack_value: 'jack',
+    card_queen_value: 'queen',
+    card_king_value: 'king',
+    card_ace_value: 'ace',
+    card_joker_value: 'joker'
+}.items()))
+
+
+def get_card_render():
+    rendered_cards = dict({})
+
+    def render_card(value, suit):
+        key = f'card-{suit}-{value}'
+        if not rendered_cards.get(key):
+            image = PhotoImage(file=f'resources/images/decks/{suit}/{card_images[value]}.gif')
+            Turtle.addshape(key, Shape('image', image))
+            card = Turtle.Turtle()
+            card.penup()
+            card.left(90)
+            card.shape(key)
+            rendered_cards[key] = card, image.width(), image.height()
+        return rendered_cards[key]
+
+    return render_card
+
+
+render_card = get_card_render()
 
 
 def splice(items, start, count):
@@ -18,8 +52,8 @@ def splice(items, start, count):
 
 def card(value, suit):
     return {
-        value,
-        suit
+        'value': value,
+        'suit': suit
     }
 
 
@@ -32,45 +66,41 @@ def make_deck():
     return deck
 
 
-def render_table(cards_on_table):
-    turtle.bgpic('pocker_bg.gif')
-    turtle.bgcolor('black')
-    for idx, card in enumerate(cards_on_table):
-        piece = turtle.Turtle()
-        offset = idx * 100 + 10
-        shape = turtle.Shape('compound')
-        poly1 = ((100, offset), (100, offset + 75), (0, offset + 75), (0, offset))
-        shape.addcomponent(poly1, 'white', 'black')
-        turtle.register_shape(f'table_card_{idx}', shape)
-        piece.shape(f'table_card_{idx}')
+def render_table(game):
+    Turtle.bgcolor('dark green')
+    for idx, card in enumerate(game['cards_on_table']):
+        value, suit = (card['value'], card['suit'])
+        card['turtle'] = render_card(value, suit)
+
 
 def debug(x, y):
     print(x, y)
 
 
 def play():
-    game = {
-        'round': 0,
-        'cards_on_table': []
-    }
-    player = {
-        'name': '',
-        'cards_in_hand': [],
-        'is_passing': False,
-        'score': 0
-    }
-    bot = {
-        'name': 'Jeeves',
-        'cards_in_hand': [],
-        'is_passing': False,
-        'score': 0
-    }
     deck = make_deck()
-    game['cards_on_table'] = splice(deck, 0, 3)
-    render_table(game['cards_on_table'])
-    turtle.onscreenclick(debug)
-    turtle.mainloop()
+    game = {
+        'deck': deck,
+        'cards_on_table': splice(deck, 0, 3),
+        'player': {
+            'name': '',
+            'cards_in_hand': splice(deck, 0, 2),
+            'is_passing': False,
+            'score': 0
+        },
+        'bot': {
+            'name': 'Jeeves',
+            'cards_in_hand': splice(deck, 0, 2),
+            'is_passing': False,
+            'score': 0
+        }
+    }
+    Turtle.onscreenclick(debug)
+    Turtle.hideturtle()
+    render_table(game)
+    Turtle.mainloop()
 
 
 if __name__ == '__main__':
     play()
+
