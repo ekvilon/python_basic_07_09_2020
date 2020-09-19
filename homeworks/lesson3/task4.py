@@ -7,6 +7,9 @@
 """
 
 
+# I am not sure if zero is positive. Per math zero doesn't have sign
+
+
 def read_value(prompt='Enter int or float ', *types):
     while True:
         value = input(prompt)
@@ -47,16 +50,30 @@ def my_func(x, y):
     return x ** y
 
 
+def get_number_in_power(number, power):
+    if power != 0:
+        result = number
+        for _ in range(0, abs(power) - 1):
+            result *= number
+        return result
+    else:
+        return 1
+
+
 def my_func2(x, y):
-    x_in_power = x
-    for _ in range(0, abs(y) - 1):
-        x_in_power *= x_in_power
-    return 1 / x_in_power
+    return 1 / get_number_in_power(x, y)
 
 
-if __name__ == '__main__':
+def main():
+    assert get_number_in_power(47, 0) == 1
+    assert get_number_in_power(47, 1) == 47
+    assert get_number_in_power(2, 3) == 8
     real_number = read_value('Enter positive int or float ', positive_int, positive_float)
     power = read_value('Enter negative int ', negative_int)
     print('Result (1 approach):', my_func(real_number, power))
     print('Result (2 approach):', my_func2(real_number, power))
+
+
+if __name__ == '__main__':
+    main()
 
