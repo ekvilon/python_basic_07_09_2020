@@ -19,11 +19,18 @@ def read_value(prompt='Enter number ', type_constructor=int, allow_empty=False):
             print('Please enter correct value')
 
 
-if __name__ == '__main__':
-    number1 = read_value('Enter first number ')
-    number2 = read_value('Enter second number ')
-
+def divide_two_numbers(x, y):
     try:
-        print('Result:', number1 / number2)
+        return x / y
     except ZeroDivisionError:
         print('Dividing on zero is prohibited')
+
+
+if __name__ == '__main__':
+    x = read_value('Enter first number ')
+    y = read_value('Enter second number ')
+    result = divide_two_numbers(x, y)
+
+    # result of division can't be 0 or None
+    if result:
+        print('Result:', x / y)
