@@ -4,13 +4,20 @@
 """
 
 
-def sum_biggest_numbers_in_list(*args, count: int = 2):
+def sum_biggest_numbers(*args: [int], amount: int = 2) -> int:
+    """
+    Takes any count of numbers and return sum of biggest in specified amount
+
+    :param args:
+    :param amount:
+    :return:
+    """
     numbers = sorted(args)
 
-    return sum(numbers[-count:])
+    return sum(numbers[-amount:])
 
 
-def my_func(x, y, z):
+def my_func(x: int, y: int, z: int) -> int:
     """
     Gets 3 numbers and returns sum of two greatest
 
@@ -19,7 +26,7 @@ def my_func(x, y, z):
     :param z: int
     :return: int
     """
-    return sum_biggest_numbers_in_list(x, y, z, count=2)
+    return sum_biggest_numbers(x, y, z, amount=2)
 
 
 if __name__ == '__main__':

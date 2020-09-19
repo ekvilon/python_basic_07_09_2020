@@ -7,12 +7,22 @@
 """
 
 
-def int_func(s: str):
+def int_func(s: str) -> str:
+    """
+    Makes first letter of string capital
+
+    :param s: str
+    :return: str
+    """
     return s.capitalize()
 
 
-if __name__ == '__main__':
+def main():
     s = input('Enter text with words surrounded by whitespaces ')
     words = s.split()
     print(' '.join([int_func(word) for word in words]))
+
+
+if __name__ == '__main__':
+    main()
 
