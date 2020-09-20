@@ -9,11 +9,12 @@ from decimal import Decimal
 from functools import reduce
 
 
-def main():
+def get_multiplication():
     numbers = [number for number in range(100, 1001) if not number & 1]
-    result = reduce(lambda accumulator, number: accumulator * number, numbers)
-    print(f'Result is: {Decimal(result):.2E}')
+    return reduce(lambda accumulator, number: accumulator * number, numbers)
 
 
 if __name__ == '__main__':
-    main()
+    result = float(Decimal(get_multiplication()).log10())
+    assert result == 1207.0668317114541, 'should be equal'
+
