@@ -4,10 +4,5 @@
 """
 
 
-def main():
-    result = [number for number in range(20, 240) if not number % 20 or not number % 21]
-    print(result)
-
-
 if __name__ == '__main__':
-    main()
+    print([number for number in range(20, 240) if not number % 20 or not number % 21])
