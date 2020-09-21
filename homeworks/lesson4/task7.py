@@ -14,7 +14,7 @@ def fact(number):
 
     for n in range(1, number + 1):
         result = result * n if n > 1 else 1
-        yield n
+        yield result
     yield result
 
 
@@ -26,4 +26,4 @@ def main(value):
 
 
 if __name__ == '__main__':
-    main(5)
+    main(12)
