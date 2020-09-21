@@ -6,12 +6,13 @@
 
 import argparse
 
+
 parser = argparse.ArgumentParser(description='Calculates salary')
-parser.add_argument('spent_hours', metavar='H', type=int, nargs=1,
+parser.add_argument('spent_hours', metavar='H', type=float, nargs=1,
                     help='Spent hours')
-parser.add_argument('rate_per_hour', metavar='R', type=int, nargs=1,
+parser.add_argument('rate_per_hour', metavar='R', type=float, nargs=1,
                     help='Rate per hour')
-parser.add_argument('bonus', metavar='B', type=int, nargs=1,
+parser.add_argument('bonus', metavar='B', type=float, nargs=1,
                     help='Bonus')
 
 
