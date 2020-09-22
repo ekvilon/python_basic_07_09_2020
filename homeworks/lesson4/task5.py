@@ -7,8 +7,6 @@
 
 from functools import reduce
 
-
-def get_multiplication():
+if __name__ == '__main__':
     numbers = [number for number in range(100, 1001) if not number & 1]
-    return reduce(lambda accumulator, number: accumulator * number, numbers)
-
+    result = reduce(lambda accumulator, number: accumulator * number, numbers)

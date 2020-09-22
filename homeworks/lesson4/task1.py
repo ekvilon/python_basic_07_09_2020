@@ -17,11 +17,11 @@ parser.add_argument('bonus', metavar='B', type=float, nargs=1,
 
 
 def calculate():
-    args = parser.parse_args()
-    spent_hours, rate_per_hour, bonus = [getattr(args, arg)[0] for arg in vars(args)]
-    result = (spent_hours * rate_per_hour) + bonus
-    print(f'Salary is: {result}$')
+    return (spent_hours * rate_per_hour) + bonus
 
 
 if __name__ == '__main__':
-    calculate()
+    args = parser.parse_args()
+    spent_hours, rate_per_hour, bonus = [getattr(args, arg)[0] for arg in vars(args)]
+    result = calculate(spent_hours, rate_per_hour, bonus)
+    print(f'Salary is: {result}$')
