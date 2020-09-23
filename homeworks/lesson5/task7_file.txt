@@ -1,0 +1,4 @@
+Horns-and-hoof Inc 105_000 5_000
+AI Ltd 150_000 0
+Evil-Corporation Corp 200_000 0
+Looser PP 50_000 55_000
