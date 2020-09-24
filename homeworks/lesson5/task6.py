@@ -16,13 +16,11 @@ if __name__ == '__main__':
         with open(get_filename(__file__, 'task6_file.txt'), 'r', encoding='UTF-8') as file:
             subjects = {}
             while line := file.readline():
-                parts = line.split()
-                subject = ''
+                *subject, str_hours = line.split(':')
+                subject = ' '.join(subject)
                 hours = 0
-                for n, part in enumerate(parts, 1):
-                    if part.endswith(':'):
-                        subject = ' '.join(parts[:n]).replace(':', '')
-                    elif subject and part != '—':
+                for part in str_hours.split(' '):
+                    if part and part != '—':
                         value, _ = part.split('(')
                         hours += int(value)
                 subjects[subject] = hours
