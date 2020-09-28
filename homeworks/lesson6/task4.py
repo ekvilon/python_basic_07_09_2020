@@ -11,9 +11,6 @@
 
 
 class Car:
-    speed = 100
-    color = 'non_colored'
-    name = ''
     is_police = False
 
     def __init__(self, speed, color, name):

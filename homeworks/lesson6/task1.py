@@ -8,90 +8,69 @@
 завершать скрипт.
 """
 
-from itertools import cycle
-from time import sleep, time
+from time import time, sleep
 
 
-class TrafficLightState:
-    name = ''
-    next_state_name = ''
-    duration = 0
+class TrafficLight:
+    __current_state = 0
+    __next_state = 1
+    __states = (('green', 7), ('yellow', 2), ('red', 5), ('yellow', 2))
+    __last_switch = time()
 
-    def __init__(self, name, next_state_name, duration):
-        self.name = name
-        self.next_state_name = next_state_name
-        self.duration = duration
+    def __init__(self):
+        self._set_current_color()
 
+    def running(self):
+        while True:
+            print(self.__color)
+            self._delay()
+            self._set_next_state()
 
-class BaseTrafficLight:
-    _states = []
-    _state = None
+    def color(self):
+        return self.__color
 
-    def run(self):
-        for state in cycle(self._states):
-            if self._state:
-                sleep(state.duration)
-            self._state = state
-            print('New state:', self._state.name)
+    def switch_to_color(self, next_color):
+        if self.__states[self.__next_state][0] != next_color:
+            raise Exception('Wrong next color')
+        delay = self._get_current_delay()
+        if self._is_needed_time_elapsed(delay):
+            self._set_next_state()
+            self.__last_switch = time()
 
-    def get_current_state(self):
-        return self._state
+    def _set_next_state(self):
+        self.__current_state += 1
+        if self.__current_state + 1 > len(self.__states):
+            self.__current_state = 0
+        self._set_current_color()
+        self.__next_state = self.__current_state + 1
 
+    def _set_current_color(self):
+        self.__color = self.__states[self.__current_state][0]
 
-class ThreeColorTrafficLight(BaseTrafficLight):
-    _states = (
-        TrafficLightState('green', 'yellow', 7),
-        TrafficLightState('yellow', 'red', 3),
-        TrafficLightState('red', 'green', 6)
-    )
+    def _get_current_delay(self):
+        return self.__states[self.__current_state][1]
 
-    def get_current_color(self):
-        return self._state.name if self._state else ''
+    def _delay(self):
+        delay = self._get_current_delay()
 
+        while True:
+            if self._is_needed_time_elapsed(delay):
+                self.__last_switch = time()
+                break
 
-class SemiThreeColorTrafficLight(ThreeColorTrafficLight):
-    _last_switch = 0
-
-    def _set_current_switch_time(self):
-        self._last_switch = time()
-
-    def _get_elapsed_switch_time(self):
-        return time() - self._last_switch if self._last_switch else 0
-
-    def switch_to(self, color):
-        if not self._state:
-            if color == self._states[0].name:
-                self._state = self._states[0]
-                self._set_current_switch_time()
-            else:
-                raise Exception('Wrong initial color')
-        else:
-            if self._state.next_state_name == color:
-                if self._get_elapsed_switch_time() >= self._state.duration:
-                    self._state = next(filter(lambda state: state.name == self._state.next_state_name, self._states))
-                    self._set_current_switch_time()
-                else:
-                    raise Exception('Needed delay has not been expired')
-            else:
-                raise Exception('Wrong next color')
+    def _is_needed_time_elapsed(self, delay):
+        return time() - self.__last_switch >= delay
 
 
 if __name__ == '__main__':
-    # Automatic switching approach 1
-    # traffic_light = ThreeColorTrafficLight()
-    # traffic_light.run()
+    traffic_light = TrafficLight()
 
-    # Semi automatic switching approach 2
-    # program will terminate with error if you change right order or time
-    semi_traffic_light = SemiThreeColorTrafficLight()
-    semi_traffic_light.switch_to('green')
-    print(semi_traffic_light.get_current_color())
-    sleep(7)
-    semi_traffic_light.switch_to('yellow')
-    print(semi_traffic_light.get_current_color())
-    sleep(3)
-    semi_traffic_light.switch_to('red')
-    print(semi_traffic_light.get_current_color())
-    sleep(6)
-    semi_traffic_light.switch_to('green')
-    print(semi_traffic_light.get_current_color())
+    traffic_light.running()
+
+    # print(traffic_light.color())
+    # sleep(7)
+    # traffic_light.switch_to_color('yellow')
+    # print(traffic_light.color())
+    # sleep(2)
+    # traffic_light.switch_to_color('red')
+    # print(traffic_light.color())

@@ -9,11 +9,6 @@ income (доход). Последний атрибут должен быть з�
 
 
 class Worker:
-    name = ''
-    surname = ''
-    position = ''
-    income = {}
-
     def __init__(self, name: str, surname: str, position: str, income: dict):
         self.name = name
         self.surname = surname

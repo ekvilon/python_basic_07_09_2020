@@ -8,31 +8,31 @@ Pencil (карандаш), Handle (маркер). В каждом из клас�
 
 
 class Stationery:
-    title: str = 'Запуск отрисовки.'
+    __title = 'Запуск отрисовки.'
 
     def draw(self):
-        print(self.title)
+        print(self.__title)
 
 
 class Pen(Stationery):
-    title: str = 'Ручка Parker'
+    __title = 'Ручка Parker'
 
     def draw(self):
-        print(self.title, 'рисует уверенно')
+        print(self.__title, 'рисует уверенно')
 
 
 class Penсil(Stationery):
-    title: str = 'Карандаш Eric Krause'
+    __title = 'Карандаш Eric Krause'
 
     def draw(self):
-        print(self.title, 'рисует тонко')
+        print(self.__title, 'рисует тонко')
 
 
 class Handle(Stationery):
-    title: str = 'Маркер Bic'
+    __title = 'Маркер Bic'
 
     def draw(self):
-        print(self.title, 'выделяет текст круто')
+        print(self.__title, 'выделяет текст круто')
 
 
 if __name__ == '__main__':
