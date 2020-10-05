@@ -13,6 +13,7 @@
 """
 
 from abc import ABC, abstractmethod
+from copy import deepcopy
 
 
 class StockError(Exception):
@@ -26,28 +27,40 @@ class OfficeEquipmentStock:
         self._equipment_in_units = dict({})
 
     def put(self, equipment, count):
-        self.validate_count(count)
+        self.validate_equipment_type(type(equipment))
+        quantity = self.validate_and_parse_count(count)
         if not isinstance(equipment, OfficeEquipment):
             raise StockError('Stock accepts only office equipment')
-        self._equipment.append(equipment)
+        for _ in range(quantity):
+            self._equipment.append(deepcopy(equipment))
 
     def move_to_unit(self, unit_name, count, equipment_type):
-        self.validate_count(count)
+        quantity = self.validate_and_parse_count(count)
+        self.validate_equipment_type(equipment_type)
         self._equipment_in_units.setdefault(unit_name, [])
-        self._equipment_in_units[unit_name].extend([self._equipment.pop() for _ in self._equipment[0:count]])
+        items = [item for item in self._equipment if type(item) == equipment_type][:quantity]
+        if len(items) < quantity:
+            raise StockError(f'You do not have {quantity} of equipment')
+        for item in items:
+            self._equipment.remove(item)
+        self._equipment_in_units[unit_name].extend(items)
+
+    def count_equipment_by_type(self, equipment_type):
+        return len([item for item in self._equipment if type(item) == equipment_type])
 
     @staticmethod
     def validate_equipment_type(equipment_type):
-        if type(equipment_type) is not OfficeEquipment:
+        if not issubclass(equipment_type, OfficeEquipment):
             raise StockError('This stock works only with office equipment')
 
     @staticmethod
-    def validate_count(count):
+    def validate_and_parse_count(count):
         if type(count) is not int:
             try:
                 return int(count)
             except ValueError:
                 raise StockError('Count should be a number')
+        return count
 
     @staticmethod
     def validate_unit(unit):
@@ -166,8 +179,9 @@ def put_copiers_to_stock(stock):
 def move_printers_to_unit(stock):
     while True:
         try:
-            s = input('In which unit do you want move printers? ')
-            stock.put(Printer(name='The Printer', inventory_number=123, sheets_count=300), s)
+            unit = input('In which unit do you want move printers? ')
+            count = input('How many printers do you want to move? ')
+            stock.move_to_unit(unit, count, Printer)
             break
         except StockError as e:
             print(e.txt)
@@ -179,5 +193,9 @@ if __name__ == '__main__':
     put_printers_to_stock(office_stock)
     put_scanners_to_stock(office_stock)
     put_copiers_to_stock(office_stock)
+    print(f'We have {office_stock.count_equipment_by_type(Printer)} printers')
+    print(f'We have {office_stock.count_equipment_by_type(Scanner)} scanners')
+    print(f'We have {office_stock.count_equipment_by_type(Copier)} copiers')
     move_printers_to_unit(office_stock)
+    print(f'We have {office_stock.count_equipment_by_type(Printer)} printers')
 
