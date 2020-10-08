@@ -1,8 +1,11 @@
 import kivy
+from kivy.event import EventDispatcher
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.stacklayout import StackLayout
+from kivy.uix.widget import Widget
 
 kivy.require('1.11.1')
 
@@ -19,6 +22,14 @@ from games.controls.player_badge import TurtlePlayerBadgeControl
 from games.entities import Card, Player
 from games.pocker_utils import splice
 from games.screen import Screen
+
+
+class PlayerBadge(GridLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.cols = 1
+        self.rows = 1
+        self.add_widget(Button(text='Hey bitch'))
 
 
 class Game(App):
@@ -135,8 +146,9 @@ class Game(App):
     def build(self):
         main_layout = BoxLayout(orientation='vertical')
         top = AnchorLayout(anchor_x='center', anchor_y='top')
-        stack = StackLayout(size_hint=(None, 0))
-        stack.add_widget(Button(text='One', size_hint=(None, None)))
+        stack = StackLayout(width=200, size_hint=(None, None))
+        badge = PlayerBadge(size_hint=(None, None))
+        stack.add_widget(badge)
         stack.add_widget(Button(text='Two', size_hint=(None, None)))
         top.add_widget(stack)
         main_layout.add_widget(top)
